@@ -1,3 +1,6 @@
 import createStore from "./createStore";
 
-export const countStore = createStore(0);
+export const countStore = createStore({
+  count1: 0,
+  count2: 0,
+});

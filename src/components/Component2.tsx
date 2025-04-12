@@ -7,8 +7,17 @@ const Component2 = () => {
   return (
     <div>
       <h1>Component2</h1>
-      <p>{count}</p>
-      <button onClick={() => setCount(count + 1)}>Increment</button>
+      <p>{count.count2}</p>
+      <button
+        onClick={() =>
+          setCount((prev) => ({
+            ...prev,
+            count2: prev.count2 + 1,
+          }))
+        }
+      >
+        Increment
+      </button>
     </div>
   );
 };
