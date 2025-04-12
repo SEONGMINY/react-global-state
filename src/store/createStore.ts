@@ -1,6 +1,6 @@
 interface Store<T extends unknown> {
-  state: T;
   setState: (newState: T) => void;
+  getState: () => T;
   subscribe: (callback: (state: T) => void) => () => void;
 }
 
@@ -13,6 +13,8 @@ const createStore = <T extends unknown>(initialState: T): Store<T> => {
     callbacks.forEach((callback) => callback(state));
   };
 
+  const getState = () => state;
+
   const subscribe = (callback: (state: T) => void) => {
     callbacks.add(callback);
 
@@ -21,7 +23,7 @@ const createStore = <T extends unknown>(initialState: T): Store<T> => {
     };
   };
 
-  return { state, setState, subscribe };
+  return { setState, getState, subscribe };
 };
 
 export default createStore;
