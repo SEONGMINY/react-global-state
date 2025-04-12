@@ -1,23 +1,16 @@
-import useStore from "../hooks/useStore";
+import useStoreSelector from "../hooks/useStoreSelector";
 import { countStore } from "../store/countStore";
 
+const storeCount2 = (state: ReturnType<typeof countStore.getState>) =>
+  state.count2;
+
 const Component2 = () => {
-  const [count, setCount] = useStore(countStore);
+  const count2 = useStoreSelector(countStore, storeCount2);
 
   return (
     <div>
       <h1>Component2</h1>
-      <p>{count.count2}</p>
-      <button
-        onClick={() =>
-          setCount((prev) => ({
-            ...prev,
-            count2: prev.count2 + 1,
-          }))
-        }
-      >
-        Increment
-      </button>
+      <p>{count2}</p>
     </div>
   );
 };
