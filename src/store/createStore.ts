@@ -1,4 +1,4 @@
-interface Store<T extends unknown> {
+export interface Store<T extends unknown> {
   setState: (newState: T | ((prev: T) => T)) => void;
   getState: () => T;
   subscribe: (callback: (state: T) => void) => () => void;
