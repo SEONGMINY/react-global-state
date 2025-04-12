@@ -4,6 +4,10 @@ import { count, increment, setStateFunctions } from "../store/countStore";
 const Component1 = () => {
   const [state, setState] = useState(count);
 
+  const onClickIncrement = () => {
+    increment(1);
+  };
+
   useEffect(() => {
     setStateFunctions.add(setState);
 
@@ -16,7 +20,7 @@ const Component1 = () => {
     <div>
       <h1>Component1</h1>
       <p>{state}</p>
-      <button onClick={increment}>Increment</button>
+      <button onClick={onClickIncrement}>Increment</button>
     </div>
   );
 };
