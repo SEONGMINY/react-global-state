@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { Store } from "../store/createStore";
 
-const useStore = <T extends unknown>(store: Store<T>) => {
+const useStore = <T>(store: Store<T>) => {
   const [state, setState] = useState(store.getState());
 
   useEffect(() => {
