@@ -1,26 +1,14 @@
-import { useEffect, useState } from "react";
-import { count, increment, setStateFunctions } from "../store/countStore";
+import useStore from "../hooks/useStore";
+import { countStore } from "../store/countStore";
 
 const Component1 = () => {
-  const [state, setState] = useState(count);
-
-  const onClickIncrement = () => {
-    increment(1);
-  };
-
-  useEffect(() => {
-    setStateFunctions.add(setState);
-
-    return () => {
-      setStateFunctions.delete(setState);
-    };
-  }, []);
+  const [count, setCount] = useStore(countStore);
 
   return (
     <div>
       <h1>Component1</h1>
-      <p>{state}</p>
-      <button onClick={onClickIncrement}>Increment</button>
+      <p>{count}</p>
+      <button onClick={() => setCount(count + 1)}>Increment</button>
     </div>
   );
 };

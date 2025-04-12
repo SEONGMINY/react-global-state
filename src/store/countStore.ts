@@ -1,7 +1,3 @@
-export let count = 0;
-export const setStateFunctions = new Set<(count: number) => void>();
+import createStore from "./createStore";
 
-export const increment = (value: number) => {
-  count += value;
-  setStateFunctions.forEach((setState) => setState(count));
-};
+export const countStore = createStore(0);
