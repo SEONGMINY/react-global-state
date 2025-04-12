@@ -11,6 +11,8 @@ const useStore = <T extends unknown>(store: Store<T>) => {
       unsubscribe();
     };
   }, [store]);
+
+  return [state, store.setState] as const;
 };
 
 export default useStore;
