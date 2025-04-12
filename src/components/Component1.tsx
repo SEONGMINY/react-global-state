@@ -1,7 +1,5 @@
 import { useEffect, useState } from "react";
-
-let count = 1;
-const setStateFunctions = new Set<(count: number) => void>();
+import { count, increment, setStateFunctions } from "../store/countStore";
 
 const Component1 = () => {
   const [state, setState] = useState(count);
@@ -13,11 +11,6 @@ const Component1 = () => {
       setStateFunctions.delete(setState);
     };
   }, []);
-
-  const increment = () => {
-    count++;
-    setStateFunctions.forEach((setState) => setState(count));
-  };
 
   return (
     <div>
