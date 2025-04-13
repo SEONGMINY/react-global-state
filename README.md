@@ -1,54 +1,46 @@
-# React + TypeScript + Vite
+# React Global State
+커스텀 React 전역 상태 관리 시스템 구현 프로젝트입니다
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## 주요 기능
+- Zustand와 유사한 API를 가진 상태 관리
+- React 18의 최신 기능 활용 (`useSyncExternalStore`)
+- 선택자(selector) 패턴 지원
 
-Currently, two official plugins are available:
+## 구현 내용
+### 상태 저장소 (store)
+`createStore.ts`에서 기본적인 상태 저장소 생성
+- 상태 가져오기 (`getState`)
+- 상태 업데이트 (`setState`)
+- 구독 (`subscribe`)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+### 리액트 훅 (React Hook)
+`useStore.ts`에서 React 컴포넌트에서 저장소를 사용할 수 있는 훅 구현
+- `useSyncExternalStore`를 활용한 상태 구독
+- 두 가지 사용 패턴 지원:
+  - 전체 상태와 setState 함수 가져오기
+  - `selector`를 사용하여 상태의 일부만 구독
+ 
+### 예시
+- `countStore.ts`: 카운터 상태를 관리하는 저장소
+- `Component1.tsx`: 전체 상태와 `setState`를 사용하는 컴포넌트
+- `Component2.tsx`: `selector`을 사용하는 컴포넌트
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## 사용 방법
+### 스토어 생성
+```typescript
+export const countStore = createStore({
+  count1: 0,
+  count2: 0,
+});
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### 컴포넌트에서 사용
+```typescript
+// 전체 상태 사용
+const [state, setState] = useStore(countStore);
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+// selector 사용
+const count2 = useStore(countStore, state => state.count2);
 ```
+
+
