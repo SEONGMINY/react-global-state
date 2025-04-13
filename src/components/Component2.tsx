@@ -1,11 +1,8 @@
-import useStoreSelector from "../hooks/useStoreSelector";
+import useStore from "../hooks/useStore";
 import { countStore } from "../store/countStore";
 
-const storeCount2 = (state: ReturnType<typeof countStore.getState>) =>
-  state.count2;
-
 const Component2 = () => {
-  const count2 = useStoreSelector(countStore, storeCount2);
+  const count2 = useStore(countStore, (state) => state.count2);
 
   return (
     <div>

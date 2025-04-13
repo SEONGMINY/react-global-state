@@ -1,18 +1,22 @@
-import { useEffect, useState } from "react";
+import { useCallback, useSyncExternalStore } from "react";
 import { Store } from "../store/createStore";
 
-const useStore = <T>(store: Store<T>) => {
-  const [state, setState] = useState(store.getState());
+function useStore<T>(store: Store<T>): readonly [T, Store<T>["setState"]];
+function useStore<T, U>(store: Store<T>, selector: (state: T) => U): U;
 
-  useEffect(() => {
-    const unsubscribe = store.subscribe(setState);
+function useStore<T, U = T>(store: Store<T>, selector?: (state: T) => U) {
+  const getState = useCallback(
+    () => (selector ? selector(store.getState()) : store.getState()),
+    [store, selector]
+  );
 
-    return () => {
-      unsubscribe();
-    };
-  }, [store]);
+  const state = useSyncExternalStore(store.subscribe, getState);
+
+  if (selector) {
+    return state;
+  }
 
   return [state, store.setState] as const;
-};
+}
 
 export default useStore;
