@@ -19,7 +19,11 @@
 - 두 가지 사용 패턴 지원:
   - 전체 상태와 setState 함수 가져오기
   - `selector`를 사용하여 상태의 일부만 구독
- 
+> **참고**: `selector` 없이 전체 상태를 구독하면 불필요한 렌더링이 발생할 수 있습니다
+>
+![화면 기록 2025-04-14 오후 4 48 57](https://github.com/user-attachments/assets/cde9245d-1e70-4ea5-b619-617292ac4452)
+
+
 ### 예시
 - `countStore.ts`: 카운터 상태를 관리하는 저장소
 - `Component1.tsx`: 전체 상태와 `setState`를 사용하는 컴포넌트
